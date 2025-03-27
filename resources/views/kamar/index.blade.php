@@ -159,6 +159,7 @@
         @endif
     </span>
 </div>
+
 <div class="progress" style="height: 8px;">
     <div class="progress-bar bg-primary" role="progressbar" 
          style="width: {{ ($tersedia + $terisi + $perbaikan) > 0 ? (($terisi / ($tersedia + $terisi + $perbaikan)) * 100) : 0 }}%">

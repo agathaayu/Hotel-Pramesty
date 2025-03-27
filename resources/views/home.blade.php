@@ -97,18 +97,97 @@
         .navbar-toggler-icon {
             filter: invert(1);
         }
+        .auth-buttons .btn {
+            font-weight: 500;
+            margin-left: 10px;
+            border-radius: 8px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s ease;
+            z-index: 1;
+        }
+        .btn-login {
+            background-color: transparent;
+            border: 2px solid white;
+            color: white;
+        }
+        .btn-login:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: white;
+            transition: all 0.4s ease;
+            z-index: -1;
+        }
+        .btn-login:hover {
+            color: #6a11cb;
+        }
+        .btn-login:hover:before {
+            left: 0;
+        }
+        .btn-register {
+            background-color: white;
+            color: #6a11cb;
+            border: 2px solid white;
+        }
+        .btn-register:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: -100%;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.2);
+            transition: all 0.4s ease;
+            z-index: -1;
+        }
+        .btn-register:hover {
+            color: white;
+            background-color: transparent;
+        }
+        .btn-register:hover:before {
+            right: 0;
+        }
+        .btn-logout {
+            background-color: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+        .btn-logout:hover {
+            background-color: rgba(255, 0, 0, 0.3);
+            border-color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        .user-welcome {
+            color: white;
+            margin-right: 10px;
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        .auth-buttons .btn:active {
+            transform: scale(0.95);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
     
     </style>
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg sticky-top" >
-        <div class="container ">
+    <nav class="navbar navbar-expand-lg sticky-top">
+        <div class="container">
             <a class="navbar-brand" href="#">PRAMESTI HOTEL</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
-                <ul class="navbar-nav">
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
                     <li class="nav-item">
                         <a class="nav-link" href="/">Home</a>
                     </li>
@@ -119,16 +198,43 @@
                         <a class="nav-link" href="/tipe-kamar">List Tipe-Kamar</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/login">Login</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/register">Register</a>
+                        <a class="nav-link" href="/send-email">Send-Email</a>
                     </li>
                 </ul>
                 
+                <!-- Authentication Links -->
+                <div class="auth-buttons">
+                    @guest
+                        <a href="{{ route('login') }}" class="btn btn-login">Login</a>
+                        <a href="{{ route('register') }}" class="btn btn-register">Register</a>
+                    @else
+                        <span class="user-welcome">Welcome, {{ Auth::user()->name }}</span>
+                        <a href="{{ route('logout') }}" 
+                           class="btn btn-logout"
+                           onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                            Logout
+                        </a>
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                            @csrf
+                        </form>
+                    @endguest
+                </div>
             </div>
         </div>
     </nav>
+
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    @if(session('success'))
+        <script>
+            Swal.fire({
+                icon: 'success',
+                title: 'Berhasil!',
+                text: "{{ session('success') }}",
+                confirmButtonText: 'OK'
+            });
+        </script>
+    @endif
 
     <!-- Hero Section -->
     <div class="hero-section text-center">
@@ -247,7 +353,7 @@
 
     <footer class="bg-dark text-white text-center py-3">
         <div class="container">
-            <p class="mb-0">© {{ date('Y') }} Hotel Room Management System</p>
+            <p class="mb-0">©️ {{ date('Y') }} Hotel Room Management System</p>
         </div>
     </footer>
 

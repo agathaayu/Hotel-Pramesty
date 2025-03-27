@@ -39,7 +39,9 @@ class AuthController extends Controller
         if (Auth::attempt($credentials, $remember)) {
             $request->session()->regenerate();
 
-            return redirect()->intended()->redirect()->route('home');
+            return redirect()->route('home');
+
+
         }
 
         throw ValidationException::withMessages([
@@ -56,10 +58,8 @@ class AuthController extends Controller
     public function logout(Request $request)
     {
         Auth::logout();
-
         $request->session()->invalidate();
         $request->session()->regenerateToken();
-
-        return redirect()->route('home');
+        return redirect('/login');
     }
 }

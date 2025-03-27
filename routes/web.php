@@ -8,7 +8,11 @@ use App\Http\Controllers\RegisterController;
 use Illuminate\Support\Facades\Route; 
 
 use App\Http\Controllers\PDFController;
-
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+Route::get('/home', [HomeController::class, 'index'])->name('home');
+Route::get('/home', function () {
+    return view('home'); // Sesuaikan dengan nama view yang benar
+})->name('home');
 Route::get('/send-email', [App\Http\Controllers\EmailController::class, 'sendEmail']);
 // Registration routes
 Route::get('/register', [RegisterController::class, 'showRegistrationForm'])->name('register');
