@@ -60,7 +60,7 @@
                         @csrf
                         
                         <div class="mb-3">
-                            <label for="name" class="form-label">Full Name</label>
+                            <label for="name" class="form-label">Nama Lengkap</label>
                             <input type="text" class="form-control @error('name') is-invalid @enderror" 
                                 id="name" name="name" value="{{ old('name') }}" required autofocus>
                             @error('name')
@@ -91,14 +91,20 @@
                             <input type="password" class="form-control" 
                                 id="password_confirmation" name="password_confirmation" required>
                         </div>
+                        <div class="mb-3">
+    <label for="role" class="form-label">Role</label>
+    <select class="form-select" id="role" name="role">
+        <option value="customer" selected>Customer</option>
+        <option value="admin">Admin</option> <!-- Jangan tampilkan ini ke publik -->
+    </select>
+</div>
                         
                         <div class="d-grid gap-2">
                             <button type="submit" class="btn btn-primary">Register</button>
                         </div>
                     </form>
                 </div>
-            </div>
-            
+    </div>
             <div class="text-center mt-3">
                 <p>Already have an account? <a href="{{ route('login') }}">Login</a></p>
             </div>

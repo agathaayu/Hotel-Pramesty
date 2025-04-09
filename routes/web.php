@@ -6,6 +6,7 @@ use App\Http\Controllers\TipeKamarController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\RegisterController;
 use Illuminate\Support\Facades\Route; 
+use App\Http\Controllers\UserController;
 
 use App\Http\Controllers\PDFController;
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
@@ -69,3 +70,21 @@ Route::put('tipe-kamar/{tipe_kamar}', [TipeKamarController::class, 'update'])->n
 Route::resource('tipe-kamar', TipeKamarController::class);
 Route::resource('tipe-kamar', TipeKamarController::class);
 Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::middleware(['auth', 'is_admin'])->group(function () {
+    Route::get('/admin', [AdminController::class, 'index'])->name('admin.dashboard');
+});
+
+    Route::middleware(['auth'])->group(function () {
+        Route::resource('user', UserController::class);
+        Route::get('/user-management', [UserController::class, 'index'])->name('user.management');
+        Route::get('/user-management', [UserController::class, 'index'])->name('user.index');
+        Route::get('/user-management', [UserController::class, 'index'])->name('user.management');
+        Route::get('/user-management', [UserController::class, 'index'])->name('user.management');
+        Route::get('/user/{id}/edit', [UserController::class, 'edit'])->name('user.edit');
+        Route::put('/user/{id}', [UserController::class, 'update'])->name('user.update');
+        Route::delete('/user/{id}', [UserController::class, 'destroy'])->name('user.destroy');
+    });
+    
+
+
+

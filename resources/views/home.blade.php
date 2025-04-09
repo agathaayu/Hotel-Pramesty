@@ -200,6 +200,10 @@
                     <li class="nav-item">
                         <a class="nav-link" href="/send-email">Send-Email</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('user.management') }}">Management User</a>
+                    </li>
+                
                 </ul>
                 
                 <!-- Authentication Links -->
